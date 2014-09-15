@@ -5,35 +5,40 @@ import (
 	"time"
 )
 
-var jobs chan string
+var jobs chan *Job
 
 // Run runs the simulate server
 func Run() {
 
 	fmt.Println("server started")
-	jobs = make(chan string, 1000)
+	jobs = make(chan *Job, 1000)
 
 	go consumer()
 }
 
-// Add adds a job to the queue
-func Add(s string) {
+// Adds a GET job to the queue. This is the simplest job, where the
+// server simply does a GET request to the supplied URL.
+func Add(url string) {
 
-	timer := time.NewTicker(time.Second)
+	j := NewJob()
+	j.URL = url
 
-	go func() {
-		for {
-			jobs <- s
-			<-timer.C
-		}
-	}()
+	jobs <- j
 }
 
 // Consumer gets a job and processes it.
+// Each job received is a new routine.
 func consumer() {
+
 	for {
 		j := <-jobs
 
-		fmt.Printf("processing job %s \n", j)
+		go func() {
+			timer := time.NewTicker(j.Interval)
+			for {
+				fmt.Printf("GET %s \n", j.URL)
+				<-timer.C
+			}
+		}()
 	}
 }

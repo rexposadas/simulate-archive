@@ -3,8 +3,7 @@ simulate
 
 ### Why simulate
 
-Unit and integration test, often run for a very limited amount of time.  They are not very good detecting issues that may arise from long usage of your API.  These issues are
-performance degradation and data corruption.
+Unit and integration test run for a very limited amount of time.  They are not very good at detecting issues which may arise from long usage of your API.  These issues are performance degradation and data corruption.
 
 
 ### Things you can do with this simulator
@@ -32,11 +31,3 @@ Create a simple application. In your main.go
 	}
 
 That's it. What this will do is run make a GET request to `google.com` and prints out the response.  You can checkout the sample apps under the `apps` folder.
-
-
-
-
-
-
-
-
