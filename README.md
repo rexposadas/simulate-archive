@@ -14,9 +14,19 @@ Unit and integration test run for a very limited amount of time.  They are not v
 
 ### Getting started
 
+The quickest way to get started is to run the sample application.
+
 Get the package.
 
 	go get github.com/rexposadas/simulate 
+
+CD into the newly created directory and run the sample application:
+
+	go run app/sample/sample.go
+
+You will see the sample application make a GET request to `http://google.com` and print out the response time. 
+
+### To get started with your own application
 
 Create a simple application. In your main.go 
 
@@ -30,4 +40,4 @@ Create a simple application. In your main.go
 		simulate.Add("http://google.com")  // add you own endpoint here
 	}
 
-That's it. This will make a GET request on `google.com` and print out the response.  You can checkout the sample apps under the `apps` folder.
+That's it. This will make a GET request on your API endpoint and print out the response. 
