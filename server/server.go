@@ -3,6 +3,8 @@ package server
 import (
 	"fmt"
 	"time"
+
+	simhttp "github.com/rexposadas/simulate/http"
 )
 
 var jobs chan *Job
@@ -35,10 +37,16 @@ func consumer() {
 
 		go func() {
 			timer := time.NewTicker(j.Interval)
+
 			for {
-				fmt.Printf("GET %s \n", j.URL)
+				resp, err := simhttp.Get(j.URL)
+				if err != nil {
+					fmt.Printf("got Error %+v on %s", err, j.URL)
+				}
+				fmt.Printf("GET '%s' - response time %f seconds. \n\n", j.URL, resp.Duration.Seconds())
 				<-timer.C
 			}
 		}()
+
 	}
 }

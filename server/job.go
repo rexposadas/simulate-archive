@@ -16,7 +16,7 @@ type Job struct {
 
 func NewJob() *Job {
 	return &Job{
-		Interval: time.Second,
+		Interval: time.Second * 2,
 		Method:   METHOD_GET,
 	}
 }

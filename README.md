@@ -30,4 +30,4 @@ Create a simple application. In your main.go
 		simulate.Add("http://google.com")  // add you own endpoint here
 	}
 
-That's it. What this will do is run make a GET request to `google.com` and prints out the response.  You can checkout the sample apps under the `apps` folder.
+That's it. This will make a GET request on `google.com` and print out the response.  You can checkout the sample apps under the `apps` folder.
