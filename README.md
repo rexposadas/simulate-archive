@@ -10,7 +10,6 @@ Unit and integration test run for a very limited amount of time.  They are not v
 
 1. Hit endpoints much like any API test applications
 1. Chain endpoints. A good example would be the registration process.
-1.
 
 ### Getting started
 
@@ -41,3 +40,10 @@ Create a simple application. In your main.go
 	}
 
 That's it. This will make a GET request on your API endpoint and print out the response. 
+
+
+### Roadmap
+
+* REST API and etcd to accept job on-the-fly
+* LogStash integration (or the entire ELK stack)
+* More examples
