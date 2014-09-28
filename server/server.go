@@ -10,11 +10,12 @@ import (
 var jobs chan *Job
 
 // Run runs the simulate server
-func Run() {
+func Run(port int) {
 
 	fmt.Println("server started")
 	jobs = make(chan *Job, 1000)
 
+	go StartAPI(port)
 	go consumer()
 }
 

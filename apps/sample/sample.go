@@ -15,10 +15,10 @@ import (
 
 func main() {
 
-	server.Run()
+	server.Run(7000)
 
 	// GET request every 1 second.
-	server.Add("http://google.com")
+	server.Add("http://limitless-harbor-6554.herokuapp.com/")
 
 	sigc := make(chan os.Signal, 1)
 	signal.Notify(sigc,
