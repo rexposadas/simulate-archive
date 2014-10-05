@@ -8,15 +8,15 @@ const (
 	METHOD_GET = "GET"
 )
 
+type call func() error
+
 type Job struct {
-	URL      string
-	Method   string
 	Interval time.Duration
+	Run      call
 }
 
 func NewJob() *Job {
 	return &Job{
 		Interval: time.Second * 2,
-		Method:   METHOD_GET,
 	}
 }
