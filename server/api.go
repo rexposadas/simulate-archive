@@ -15,7 +15,7 @@ func StartAPI(port int) {
 
 	http.Handle("/", r)
 
-	fmt.Printf("Serving API in PORT %d", port)
+	fmt.Printf("Serving API in PORT %d \n", port)
 
 	err := http.ListenAndServe(":"+strconv.Itoa(port), nil)
 	if err != nil {

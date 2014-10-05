@@ -10,7 +10,7 @@ var Jobs chan *Job
 // Run runs the simulate server
 func Run(port int) {
 
-	fmt.Println("server started")
+	fmt.Println("server started \n\n")
 	Jobs = make(chan *Job, 1000)
 
 	go StartAPI(port)
