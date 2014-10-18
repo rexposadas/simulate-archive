@@ -27,20 +27,15 @@ func GetGoogle() error {
 
 func main() {
 
-	server.Run(7000)
+	server.Run(0)
 
-	// Attach the GetGoogle function to our job and send it to the Jobs channel.
-	// Simulate will run the job once a second which is the default interval for all jobs.
+	// Create job and send to scheduler
 	g := server.NewJob()
 	g.Run = GetGoogle
 
 	server.Jobs <- g
 
 	sigc := make(chan os.Signal, 1)
-	signal.Notify(sigc,
-		syscall.SIGHUP,
-		syscall.SIGINT,
-		syscall.SIGTERM,
-		syscall.SIGQUIT)
+	signal.Notify(sigc, syscall.SIGQUIT)
 	<-sigc
 }

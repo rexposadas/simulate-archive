@@ -5,15 +5,22 @@ import (
 	"time"
 )
 
-var Jobs chan *Job
+var (
+	Jobs chan *Job
+)
 
 // Run runs the simulate server
 func Run(port int) {
-
-	fmt.Println("server started \n\n")
 	Jobs = make(chan *Job, 1000)
 
-	go StartAPI(port)
+	fmt.Println("Simulator started \n\n")
+
+	// The API is optional
+	// todo: use CL flag
+	if port > 0 {
+		go StartAPI(port)
+	}
+
 	go consumer()
 }
 

@@ -12,7 +12,6 @@ func StartAPI(port int) {
 
 	r := mux.NewRouter()
 	r.HandleFunc("/jobs", AddJobs).Methods("Post")
-
 	http.Handle("/", r)
 
 	fmt.Printf("Serving API in PORT %d \n", port)
