@@ -25,47 +25,11 @@ Get the package.
 
 CD into the newly created directory and run the sample application:
 
-	go run app/sample/sample.go
+	go run apps/example1/main.go
 
 You will see the sample application make a GET request to `http://google.com` and print out the response time.
 
-### Getting started
-
-Create a simple application. In your main.go
-
-	package main
-
-	import "github.com/rexposadas/simulate/server"
-
-	// GetGoogle make a GET request to http://google.com
-	// error handling has been omited for simplicity. Please add error
-	// handling in your code.
-	func GetGoogle() error {
-		_, err := simhttp.Get("http://google.com")
-		return err
-	}
-
-	func main() {
-		server.Run(7000)  // starts the simulator on port 7000
-		// Create job and send to scheduler
-		g := server.NewJob()
-		g.Run = GetGoogle
-		server.Jobs <- g
-
-		// Simulate will run the job once a second which is the default behavior.
-
-		sigc := make(chan os.Signal, 1)
-		signal.Notify(sigc,
-		syscall.SIGHUP,
-		syscall.SIGINT,
-		syscall.SIGTERM,
-		syscall.SIGQUIT)
-		<-sigc
-	}
-
-That's it. This will make a GET request to your API and print out response times.
-
-
+To get started with your own simulation, refer to the code in `apps/sample/example1`. `main.go` from that example is meant as a walk-through of a simple simulation.
 
 
 ### Roadmap
