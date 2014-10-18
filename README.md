@@ -3,9 +3,9 @@ simulate
 
 ### Why simulate
 
-Unit and integration test run for a very limited amount of time.  They are not very good at detecting issues which may arise from long usage of your API.  These issues are performance degradation and data corruption.
+Unit and integration test run for a very limited amount of time.  They are not very good at detecting issues which may arise from long usage of your API.  Some of these issues are performance degradation and data corruption.
 
-Simulate can be as intrusive as you want (that's a good thing).  It can act as an outside application which treats your API as a blackbox or can be imported in your Go application and give it access to features you want to test. Note that having simulate run separately from your application allows your application to be written in any language since the interaction will strictly be via REST.
+Simulate can be as intrusive as you want (don't worry, that's a good thing.  I can explain).  It can act as an outside application which treats your API as a blackbox or can be imported in your Go application and give it access to features you want to test. Note that having simulate run separately from your application allows your application to be written in any language since the interaction will strictly be via REST.
 
 
 ### Things you can do with this simulator
