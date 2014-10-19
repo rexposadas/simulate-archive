@@ -29,7 +29,7 @@ CD into the newly created directory and run the sample application:
 
 You will see the sample application make a GET request to `http://google.com` and print out the response time.
 
-To get started with your own simulation, refer to the code in `apps/sample/example1`. `main.go` from that example is meant as a walk-through of a simple simulation.
+To get started with your own simulation, refer to the code in `apps/sample/example1/main.go`. That example is meant as a walk-through of a simple simulation.
 
 
 ### Roadmap
