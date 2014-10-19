@@ -19,7 +19,7 @@ func main() {
 	go code.StartAPI(7676)
 
 	// run simulations against the our fake API
-	go code.RunSimulator(2011)
+	go code.RunSimulator()
 
 	sigc := make(chan os.Signal, 1)
 	signal.Notify(sigc, syscall.SIGQUIT)

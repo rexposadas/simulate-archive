@@ -1,4 +1,4 @@
-package server
+package simulate
 
 import (
 	"fmt"
@@ -20,7 +20,6 @@ func StartAPI(port int) {
 	if err != nil {
 		panic(err)
 	}
-
 }
 
 // AddJobs adds a job in the job chanel.

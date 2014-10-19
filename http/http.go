@@ -6,36 +6,53 @@ import (
 	"time"
 )
 
+func MakeRequest(req *http.Request) (*SimResponse, error) {
+
+	client := &http.Client{}
+	start := time.Now()
+
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	since := time.Since(start)
+	r := &SimResponse{
+		Duration: since,
+		Response: resp,
+	}
+	return r, nil
+}
+
 // Get, runs a simple GET request on the specified URL.
-func Get(url string) (*Response, error) {
+func Get(url string) (*SimResponse, error) {
 
 	start := time.Now()
 	resp, err := http.Get(url)
 	if err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
 
 	since := time.Since(start)
-	r := &Response{
+	r := &SimResponse{
 		Duration: since,
+		Response: resp,
 	}
 
 	return r, nil
 }
 
-func Post(url string, payload url.Values) (*Response, error) {
+func Post(url string, payload url.Values) (*SimResponse, error) {
 
 	start := time.Now()
 	resp, err := http.PostForm(url, payload)
 	if err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
 
 	since := time.Since(start)
-	r := &Response{
+	r := &SimResponse{
 		Duration: since,
+		Response: resp,
 	}
 
 	return r, nil

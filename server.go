@@ -1,4 +1,4 @@
-package server
+package simulate
 
 import (
 	"fmt"
@@ -7,18 +7,19 @@ import (
 
 var (
 	Jobs chan *Job
+	Port int
 )
 
 // Run runs the simulate server
-func Run(port int) {
+func Run() {
 	Jobs = make(chan *Job, 1000)
 
 	fmt.Println("Simulator started \n\n")
 
 	// The API is optional
 	// todo: use CL flag
-	if port > 0 {
-		go StartAPI(port)
+	if Port > 0 {
+		go StartAPI(Port)
 	}
 
 	go consumer()

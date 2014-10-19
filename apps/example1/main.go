@@ -3,7 +3,7 @@ package main
 // This is a sample application which shows a simple use case of
 // simulate. This usecase hits the Google homepage once a second -
 // that's the default interval behavior.
-// The server faults to writing to stdout/stderr.
+// The simulate defaults to writing to stdout/stderr.
 
 import (
 	"fmt"
@@ -11,8 +11,8 @@ import (
 	"os/signal"
 	"syscall"
 
+	"github.com/rexposadas/simulate"
 	simhttp "github.com/rexposadas/simulate/http"
-	"github.com/rexposadas/simulate/server"
 )
 
 // GetGoogle make a GET request to http://google.com
@@ -27,13 +27,13 @@ func GetGoogle() error {
 
 func main() {
 
-	server.Run(0)
+	simulate.Run()
 
 	// Create job and send to scheduler
-	g := server.NewJob()
+	g := simulate.NewJob()
 	g.Run = GetGoogle
 
-	server.Jobs <- g
+	simulate.Jobs <- g
 
 	sigc := make(chan os.Signal, 1)
 	signal.Notify(sigc, syscall.SIGQUIT)

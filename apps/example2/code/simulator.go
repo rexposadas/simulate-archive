@@ -3,14 +3,14 @@ package code
 // This is a sample application which shows a simple use case of
 // simulate. This usecase hits the Google homepage once a second -
 // that's the default interval behavior.
-// The server faults to writing to stdout/stderr.
+// The simulate faults to writing to stdout/stderr.
 
 import (
 	"fmt"
 	"net/url"
 
+	"github.com/rexposadas/simulate"
 	simhttp "github.com/rexposadas/simulate/http"
-	"github.com/rexposadas/simulate/server"
 )
 
 // GetGoogle make a GET request to http://google.com
@@ -32,20 +32,20 @@ func Post() error {
 	return nil
 }
 
-func RunSimulator(port int) {
+func RunSimulator() {
 
 	// The simulater is a service which makes API calls
 	// no need to run simulate's REST endpoint for this example
-	server.Run(0)
+	simulate.Run()
 
 	// Create job and send to scheduler
-	g := server.NewJob()
+	g := simulate.NewJob()
 	g.Run = Get
-	server.Jobs <- g
+	simulate.Jobs <- g
 	fmt.Println("added GET job")
 
-	p := server.NewJob()
+	p := simulate.NewJob()
 	p.Run = Post
-	server.Jobs <- p
+	simulate.Jobs <- p
 	fmt.Println("added POST job")
 }
