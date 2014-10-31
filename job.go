@@ -6,16 +6,22 @@ import (
 
 type call func() error
 
+type ActorImp interface {
+	Run() error
+}
+
 // Job is a job which simulate runs.  Jobs are sent to the Jobs channel
 // for processing.
 type Job struct {
-	Interval time.Duration
-	Run      call
+	Iteration int
+	Delay     time.Duration
+	Actor     ActorImp
 }
 
 // NewJob returns a job with a default values.
 func NewJob() *Job {
 	return &Job{
-		Interval: time.Second * 2, // arbitrary interval to do the job.
+		Iteration: 0,
+		Delay:     time.Second * 2, // arbitrary interval to do the job.
 	}
 }

@@ -22,7 +22,7 @@ func Run() {
 		go StartAPI(Port)
 	}
 
-	go consumer()
+	go worker()
 }
 
 // Adds a GET job to the queue. This is the simplest job, where the
@@ -33,18 +33,18 @@ func Add(url string) {
 	Jobs <- j
 }
 
-// Consumer gets a job and processes it.
+// Worker runs the jobs.
 // Each job received is a new routine.
-func consumer() {
+func worker() {
 
 	for {
 		j := <-Jobs
 
 		go func() {
-			timer := time.NewTicker(j.Interval)
+			timer := time.NewTicker(j.Delay)
 
 			for {
-				j.Run()
+				j.Actor.Run()
 				<-timer.C
 			}
 		}()
