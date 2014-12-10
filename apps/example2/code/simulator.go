@@ -13,8 +13,15 @@ import (
 	simhttp "github.com/rexposadas/simulate/http"
 )
 
-// GetGoogle make a GET request to http://google.com
-func Get() error {
+type MyActor struct{}
+
+func (m *MyActor) Run() error {
+	m.Get()
+	m.Post()
+	return nil
+}
+
+func (m *MyActor) Get() error {
 	resp, err := simhttp.Get("http://localhost:7676/jobs")
 	if err != nil {
 		return fmt.Errorf("got Error %+v ", err)
@@ -23,7 +30,7 @@ func Get() error {
 	return nil
 }
 
-func Post() error {
+func (m *MyActor) Post() error {
 	resp, err := simhttp.Post("http://localhost:7676/jobs", url.Values{})
 	if err != nil {
 		return fmt.Errorf("got Error %+v ", err)
@@ -39,13 +46,8 @@ func RunSimulator() {
 	simulate.Run()
 
 	// Create job and send to scheduler
-	g := simulate.NewJob()
-	g.Run = Get
-	simulate.Jobs <- g
-	fmt.Println("added GET job")
-
-	p := simulate.NewJob()
-	p.Run = Post
-	simulate.Jobs <- p
-	fmt.Println("added POST job")
+	j := simulate.NewJob()
+	a := &MyActor{}
+	j.Actor = a
+	simulate.Jobs <- j
 }
