@@ -15,8 +15,10 @@ import (
 	simhttp "github.com/rexposadas/simulate/http"
 )
 
+type MyActor struct{}
+
 // GetGoogle make a GET request to http://google.com
-func GetGoogle() error {
+func (m *MyActor) Run() error {
 	resp, err := simhttp.Get("http://google.com")
 	if err != nil {
 		return fmt.Errorf("got Error %+v ", err)
@@ -30,11 +32,10 @@ func main() {
 	simulate.Run()
 
 	// Create job and send to scheduler
-	g := simulate.NewJob()
-	g.Run = GetGoogle
-
-	simulate.Jobs <- g
-
+	j := simulate.NewJob()
+	d := &MyActor{}
+	j.Actor = d
+	simulate.Jobs <- j
 	sigc := make(chan os.Signal, 1)
 	signal.Notify(sigc, syscall.SIGQUIT)
 	<-sigc
