@@ -13,7 +13,7 @@ Simulate can be as intrusive as you want (don't worry, that's a good thing.  I c
 1. Hit endpoints much like any API test applications
 1. Validate that actions taken on your API is represented correctly in your database.
 1. Detect issues in your application which can surface only after long periods of use, such as data corruption and performance degradation.
-2. You can simulate release candidate before moving it further along the deployment chain.
+2. You can simulate release candidates before moving it further along the deployment chain.
 
 ### Getting started
 
@@ -34,6 +34,5 @@ To get started with your own simulation, refer to the code in `apps/sample/examp
 
 ### Roadmap
 
-* REST API and etcd to accept job on-the-fly
-* LogStash integration (or the entire ELK stack)
+* Metrics integration 
 * More examples
