@@ -2,7 +2,12 @@ package simulate
 
 type StatsObj struct {
 	Count map[string]int
-	MChan chan map[string]int
+	MChan chan CountData
+}
+
+type CountData struct {
+	name  string
+	value int
 }
 
 // Tick adds a one (+1) to the Map for a given key
@@ -18,7 +23,7 @@ func (s *StatsObj) Sub(t string) {
 
 func (s *StatsObj) Run() {
 	s.Count = make(map[string]int)
-	s.MChan = make(chan map[string]int, 1000)
+	s.MChan = make(chan CountData, 1000)
 
 	// todo: create a loop which consumes MChan and adds/deletes from Count
 
