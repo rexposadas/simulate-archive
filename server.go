@@ -15,7 +15,7 @@ var (
 func Run() {
 	Jobs = make(chan *Job, 1000)
 	Stats := &StatsObj{}
-	Stats.Run()
+	go Stats.Run()
 
 	fmt.Println("Simulator started \n\n")
 
