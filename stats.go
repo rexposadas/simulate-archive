@@ -10,30 +10,36 @@ type CountData struct {
 	value int
 }
 
-// Tick adds a one (+1) to the Map for a given key
-func (s *StatsObj) Tick(t string) {
+func (s *StatsObj) Tick(t string, c int) {
 
-	// todo: implement
-	// this function adds (+1) to the map M.
+	d := CountData{
+		name:  t,
+		value: c,
+	}
+	s.MChan <- d
 }
 
+// Add adds a one (+1) to the Map for a given key
+func (s *StatsObj) Add(t string) {
+	s.Tick(t, 1)
+}
+
+// Add substracts one (-1) to the Map for a given key
 func (s *StatsObj) Sub(t string) {
-	//todo: implement
+	s.Tick(t, -1)
 }
 
 func (s *StatsObj) Run() {
 	s.Count = make(map[string]int)
 	s.MChan = make(chan CountData, 1000)
+
 	for {
 		m := <-s.MChan
 
-		if val, ok := s.Count[m.name]; ok {
-			s.Count[m.name] += val
+		if v, ok := s.Count[m.name]; ok {
+			s.Count[m.name] += v
 		} else {
 			s.Count[m.name] = 1
 		}
-
 	}
-	// todo: create a loop which consumes MChan and adds/deletes from Count
-
 }
