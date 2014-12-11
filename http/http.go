@@ -1,9 +1,12 @@
 package http
 
 import (
+	"fmt"
 	"net/http"
 	"net/url"
 	"time"
+
+	"github.com/rexposadas/simulate"
 )
 
 func MakeRequest(req *http.Request) (*SimResponse, error) {
@@ -20,6 +23,11 @@ func MakeRequest(req *http.Request) (*SimResponse, error) {
 		Duration: since,
 		Response: resp,
 	}
+
+	fmt.Print("tracking ", req.URL.String())
+
+	simulate.Stats.TrackResponse(req.URL.String(), since)
+
 	return r, nil
 }
 
@@ -29,6 +37,7 @@ func Get(url string) (*SimResponse, error) {
 	start := time.Now()
 	resp, err := http.Get(url)
 	if err != nil {
+		simulate.Stats.Add(err.Error())
 		return nil, err
 	}
 
@@ -38,6 +47,8 @@ func Get(url string) (*SimResponse, error) {
 		Response: resp,
 	}
 
+	fmt.Print("stating get")
+	simulate.Stats.TrackResponse(url, since)
 	return r, nil
 }
 
@@ -54,6 +65,7 @@ func Post(url string, payload url.Values) (*SimResponse, error) {
 		Duration: since,
 		Response: resp,
 	}
+	simulate.Stats.TrackResponse(url, since)
 
 	return r, nil
 }
