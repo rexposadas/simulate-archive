@@ -2,7 +2,6 @@ package simulate
 
 import (
 	"fmt"
-	"time"
 )
 
 var (
@@ -42,15 +41,6 @@ func worker() {
 
 	for {
 		j := <-Jobs
-
-		go func() {
-			timer := time.NewTicker(j.Delay)
-
-			for {
-				j.Actor.Run()
-				<-timer.C
-			}
-		}()
-
+		go j.Actor.Run()
 	}
 }

@@ -2,11 +2,10 @@ package http
 
 import (
 	"fmt"
+	"github.com/rexposadas/simulate"
 	"net/http"
 	"net/url"
 	"time"
-
-	"github.com/rexposadas/simulate"
 )
 
 func MakeRequest(req *http.Request) (*SimResponse, error) {
@@ -23,8 +22,6 @@ func MakeRequest(req *http.Request) (*SimResponse, error) {
 		Duration: since,
 		Response: resp,
 	}
-
-	fmt.Print("tracking ", req.URL.String())
 
 	simulate.Stats.TrackResponse(req.URL.String(), since)
 
