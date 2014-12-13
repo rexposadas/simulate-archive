@@ -1,6 +1,7 @@
 package http
 
 import (
+	"fmt"
 	"net/http"
 	"net/url"
 	"time"
@@ -20,7 +21,7 @@ func MakeRequest(req *http.Request) (*SimResponse, error) {
 		Duration: since,
 		Response: resp,
 	}
-	return r, nil
+	return nil, fmt.Errorf("Request reresponse time %f seconds. \n", r.Duration.Seconds())
 }
 
 // Get, runs a simple GET request on the specified URL.
@@ -37,8 +38,7 @@ func Get(url string) (*SimResponse, error) {
 		Duration: since,
 		Response: resp,
 	}
-
-	return r, nil
+	return nil, fmt.Errorf(url + " - response time %f seconds. \n", r.Duration.Seconds())
 }
 
 func Post(url string, payload url.Values) (*SimResponse, error) {
@@ -55,5 +55,5 @@ func Post(url string, payload url.Values) (*SimResponse, error) {
 		Response: resp,
 	}
 
-	return r, nil
+	return nil, fmt.Errorf(url + " - response time %f seconds. \n", r.Duration.Seconds())
 }
