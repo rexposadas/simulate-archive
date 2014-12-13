@@ -22,20 +22,22 @@ func (m *MyActor) Run() error {
 }
 
 func (m *MyActor) Get() error {
-	resp, err := simhttp.Get("http://localhost:7676/jobs")
-	if err != nil {
+	resp := simhttp.Get("http://localhost:7676/jobs")
+	/*if err != nil {
 		return fmt.Errorf("got Error %+v ", err)
-	}
-	fmt.Printf("GET localhost:7676 - response time %f seconds. \n\n", resp.Duration.Seconds())
+	}*/
+	//fmt.Printf("GET localhost:7676 - response time %f seconds. \n\n", resp.Duration.Seconds())
+	fmt.Println(resp)
 	return nil
 }
 
 func (m *MyActor) Post() error {
-	resp, err := simhttp.Post("http://localhost:7676/jobs", url.Values{})
-	if err != nil {
-		return fmt.Errorf("got Error %+v ", err)
-	}
-	fmt.Printf("POST localhost:7676 - response time %f seconds. \n\n", resp.Duration.Seconds())
+	resp := simhttp.Post("http://localhost:7676/jobs", url.Values{})
+	/*if err != nil {
+		return fmt.Errorf("got Error %+v ", resp)
+	}*/
+	//fmt.Printf("POST localhost:7676 - response time %f seconds. \n\n", resp.Duration.Seconds())
+	fmt.Println(resp)
 	return nil
 }
 
