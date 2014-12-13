@@ -1,6 +1,7 @@
 package http
 
 import (
+	"fmt"
 	"net/http"
 	"net/url"
 	"time"
@@ -38,6 +39,8 @@ func Get(url string) (*SimResponse, error) {
 		Response: resp,
 	}
 
+	fmt.Printf("Getting of '%s' - response time %f seconds. \n\n", url, since.Seconds())
+
 	return r, nil
 }
 
@@ -54,6 +57,8 @@ func Post(url string, payload url.Values) (*SimResponse, error) {
 		Duration: since,
 		Response: resp,
 	}
+
+	fmt.Printf("Post to '%s' - response time %f seconds. \n\n", url, since.Seconds())
 
 	return r, nil
 }
