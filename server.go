@@ -18,21 +18,7 @@ func Run() {
 
 	fmt.Println("Simulator started \n\n")
 
-	// The API is optional
-	// todo: use CL flag
-	if Port > 0 {
-		go StartAPI(Port)
-	}
-
 	go worker()
-}
-
-// Adds a GET job to the queue. This is the simplest job, where the
-// server simply does a GET request to the supplied URL.
-func Add(url string) {
-
-	j := NewJob()
-	Jobs <- j
 }
 
 // Worker runs the jobs.

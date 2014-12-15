@@ -50,8 +50,6 @@ func (s *StatsObj) mustDB() {
 	if err != nil {
 		panic(err)
 	}
-
-	// todo: clear all series
 }
 
 func (s *StatsObj) Run() {

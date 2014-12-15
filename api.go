@@ -26,8 +26,6 @@ func StartAPI(port int) {
 // This is part of the on-the-fly simulation effort
 func AddJobs(w http.ResponseWriter, r *http.Request) {
 
-	r.ParseForm()
-	u := r.FormValue("url")
+	// todo: implement
 
-	Add(u)
 }
