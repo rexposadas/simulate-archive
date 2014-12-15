@@ -8,7 +8,8 @@ import (
 )
 
 type StatsObj struct {
-	Count  *Counter
+	Count  *Counter // non error counters
+	Errors *Counter
 	MChan  chan CountData
 	Client *client.Client
 }
@@ -21,7 +22,7 @@ type CountData struct {
 func (s *StatsObj) mustDB() {
 
 	d := &client.ClientConfig{
-		Database: "leaf",
+	// Database: "leaf",
 	}
 
 	c, err := client.New(d)
@@ -29,13 +30,38 @@ func (s *StatsObj) mustDB() {
 		panic(err)
 	}
 
-	s.Client = c
+	dbs, err := c.GetDatabaseList()
+	if err != nil {
+		panic(err)
+	}
+
+	if len(dbs) > 0 {
+		c.DeleteDatabase("leaf")
+	}
+
+	if err = c.CreateDatabase("leaf"); err != nil {
+		panic(err)
+	}
+
+	s.Client, err = client.NewClient(&client.ClientConfig{
+		Database: "leaf",
+	})
+
+	if err != nil {
+		panic(err)
+	}
+
+	// todo: clear all series
 }
 
 func (s *StatsObj) Run() {
 	s.MChan = make(chan CountData, 1000)
 	s.Count = &Counter{}
 	s.Count.M = make(map[string]int)
+
+	s.Errors = &Counter{}
+	s.Errors.M = make(map[string]int)
+
 	s.mustDB()
 	go s.SendStats()
 
@@ -60,30 +86,43 @@ func (s *StatsObj) TrackResponse(url string, duration time.Duration) {
 	}
 }
 
+// sendCounts sends count stats to influxDB
+func sendCounts(c *client.Client, series string, count *Counter) {
+	count.lock.Lock()
+	defer count.lock.Unlock()
+
+	for k, v := range count.M {
+		u := &client.Series{
+			Name:    series,
+			Columns: []string{"key", "count"},
+			Points: [][]interface{}{
+				{k, v},
+			},
+		}
+
+		fmt.Printf("adding tick %+v\n", u)
+		if err := c.WriteSeries([]*client.Series{u}); err != nil {
+			panic(err)
+		}
+	}
+}
+
 // SendStats periodically send stats to influxDB
 func (s *StatsObj) SendStats() {
 
 	t := time.NewTicker(time.Second * 5)
 	for {
 		<-t.C
-		s.Count.lock.Lock()
-
-		for k, v := range s.Count.M {
-			u := &client.Series{
-				Name:    "counts",
-				Columns: []string{"key", "count"},
-				Points: [][]interface{}{
-					{k, v},
-				},
-			}
-
-			fmt.Printf("adding tick %+v\n", u)
-			if err := s.Client.WriteSeries([]*client.Series{u}); err != nil {
-				panic(err)
-			}
-		}
-		s.Count.lock.Unlock()
+		go sendCounts(s.Client, "counts", s.Count)
+		go sendCounts(s.Client, "errors", s.Errors)
 	}
+}
+
+// Error add an error stat.
+func (s *StatsObj) Error(e string) {
+
+	// we can do this because the Counter struct is threadsafe
+	s.Errors.Add(e, 1)
 }
 
 func (s *StatsObj) Tick(t string, c int) {
