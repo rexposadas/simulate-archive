@@ -14,7 +14,6 @@ func (s *StatsObj) Add(t string) {
 	   newVal := val + 1;
 	   s.Count[t] = newVal 
 	}
-
 }
 
 func (s *StatsObj) Sub(t string) {
