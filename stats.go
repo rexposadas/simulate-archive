@@ -1,30 +1,32 @@
 package simulate
 
+// StatsObject is in charge of keep track of statistics
 type StatsObj struct {
-	Count map[string]int
-	MChan chan CountData
-}
 
-type CountData struct {
-	name  string
-	value int
+	// this variable keeps a map of strings and it's count.
+	Count map[string]int
 }
 
 // Tick adds a one (+1) to the Map for a given key
-func (s *StatsObj) Tick(t string) {
+func (s *StatsObj) Add(t string) {
 
-	// todo: implement
-	// this function adds (+1) to the map M.
+	if val, ok := s.Count[t]; ok {
+	   newVal := val + 1;
+	   s.Count[t] = newVal 
+	}
+
 }
 
 func (s *StatsObj) Sub(t string) {
-	//todo: implement
+
+	if val, ok := s.Count[t]; ok {
+	   newVal := val - 1;
+	   s.Count[t] = newVal 
+	}
+
 }
 
 func (s *StatsObj) Run() {
 	s.Count = make(map[string]int)
-	s.MChan = make(chan CountData, 1000)
-
-	// todo: create a loop which consumes MChan and adds/deletes from Count
 
 }

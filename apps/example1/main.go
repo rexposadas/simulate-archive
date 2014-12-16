@@ -6,6 +6,7 @@ package main
 // The simulate defaults to writing to stdout/stderr.
 
 import (
+	"fmt"
 	"os"
 	"os/signal"
 	"syscall"
@@ -18,9 +19,11 @@ type MyActor struct{}
 
 // GetGoogle make a GET request to http://google.com
 func (m *MyActor) Run() error {
-	resp := simhttp.Get("http://google.com")
-	
-	return resp
+	_, err := simhttp.Get("http://google.com")
+	if err != nil {
+		return fmt.Errorf("got Error %+v ", err)
+	}
+	return nil
 }
 
 func main() {
