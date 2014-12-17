@@ -9,32 +9,23 @@ type StatsObj struct {
 
 // Tick adds a one (+1) to the Map for a given key
 func (s *StatsObj) Add(t string) {
-
-	s.simpleMath(t, "add")
-
+	s.SimpleMath(t, 1)
 }
 
 func (s *StatsObj) Sub(t string) {
-
-	s.simpleMath(t, "sub")
-
+	s.SimpleMath(t, -1)
 }
 
-func (s *StatsObj) simpleMath(t string, o string) {
+// simpleMath adds/substracts an arbitrary amount from a map key
+func (s *StatsObj) SimpleMath(t string, c int) {
 
-	newVal := 0
 	if val, ok := s.Count[t]; ok {
-
-		// check if operation is add or sub
-		if o == "sub" {
-			newVal = val - 1
-		}else{
-			newVal = val + 1
-		}   
+		s.Count[t] = val + c
+	} else {
+		s.Count[t] = c
 	}
-	s.Count[t] = newVal 
-	
 }
+
 func (s *StatsObj) Run() {
 	s.Count = make(map[string]int)
 }

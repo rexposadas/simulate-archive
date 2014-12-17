@@ -14,7 +14,7 @@ var (
 // Run runs the simulate server
 func Run() {
 	Jobs = make(chan *Job, 1000)
-	Stats := &StatsObj{}
+	Stats = &StatsObj{}
 	Stats.Run()
 
 	fmt.Println("Simulator started \n\n")
