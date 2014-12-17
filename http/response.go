@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-// Response contains informatino about the response we received
+// Response contains information about the response we received
 // from the API
 type SimResponse struct {
 	*http.Response
