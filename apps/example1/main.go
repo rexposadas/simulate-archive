@@ -38,4 +38,8 @@ func main() {
 	sigc := make(chan os.Signal, 1)
 	signal.Notify(sigc, syscall.SIGQUIT)
 	<-sigc
+
+	// stats check
+	s := simulate.StatsObj{make(map[string]int)} 
+	fmt.Printf("%+v\n", s.Count)
 }
