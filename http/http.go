@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"net/url"
 	"time"
+	"github.com/rexposadas/simulate"
 )
 
 func MakeRequest(req *http.Request) (*SimResponse, error) {
@@ -39,6 +40,10 @@ func Get(url string) (*SimResponse, error) {
 		Response: resp,
 	}
 
+	// stats check
+	s := simulate.StatsObj{make(map[string]int)} 
+	s.SimpleMath(url, 1)
+	
 	fmt.Printf("Getting of '%s' - response time %f seconds. \n\n", url, since.Seconds())
 
 	return r, nil
@@ -57,6 +62,11 @@ func Post(url string, payload url.Values) (*SimResponse, error) {
 		Duration: since,
 		Response: resp,
 	}
+
+	// stats check
+	s := simulate.StatsObj{make(map[string]int)} 
+	s.SimpleMath(url, 1)
+	fmt.Printf("%+v\n", s.Count)
 
 	fmt.Printf("Post to '%s' - response time %f seconds. \n\n", url, since.Seconds())
 
