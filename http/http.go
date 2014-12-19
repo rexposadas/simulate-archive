@@ -42,7 +42,7 @@ func Get(url string) (*SimResponse, error) {
 
 	// stats check
 	s := simulate.StatsObj{make(map[string]int)} 
-	s.SimpleMath(url, 1)
+	s.Add(url)
 	
 	fmt.Printf("Getting of '%s' - response time %f seconds. \n\n", url, since.Seconds())
 
@@ -65,8 +65,7 @@ func Post(url string, payload url.Values) (*SimResponse, error) {
 
 	// stats check
 	s := simulate.StatsObj{make(map[string]int)} 
-	s.SimpleMath(url, 1)
-	fmt.Printf("%+v\n", s.Count)
+	s.Add(url)
 
 	fmt.Printf("Post to '%s' - response time %f seconds. \n\n", url, since.Seconds())
 
