@@ -39,7 +39,3 @@ func (s *StatsObj) SimpleMath(t string, c int) {
 		s.Count[t] = c
 	}
 }
-
-func (s *StatsObj) Run() {
-	s.Count = make(map[string]int)
-}
