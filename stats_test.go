@@ -2,13 +2,13 @@ package simulate
 
 import (
 	"github.com/stretchr/testify/assert"
-
+	
 	"testing"
 )
 
 func TestAddSub(t *testing.T) {
 
-	s := StatsObj{make(map[string]int)}
+	s := New()
 
 	s.Add("foo")
 	s.Add("foo")

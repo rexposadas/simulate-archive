@@ -40,6 +40,6 @@ func main() {
 	<-sigc
 
 	// stats check
-	s := simulate.StatsObj{make(map[string]int)} 
+	s := simulate.New()
 	fmt.Printf("%+v\n", s.Count)
 }
