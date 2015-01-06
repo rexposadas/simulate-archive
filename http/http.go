@@ -2,10 +2,10 @@ package http
 
 import (
 	"fmt"
+	"github.com/rexposadas/simulate"
 	"net/http"
 	"net/url"
 	"time"
-	"github.com/rexposadas/simulate"
 )
 
 func MakeRequest(req *http.Request) (*SimResponse, error) {
@@ -43,7 +43,7 @@ func Get(url string) (*SimResponse, error) {
 	// stats check
 	s := simulate.New()
 	s.Add(url)
-	
+
 	fmt.Printf("Getting of '%s' - response time %f seconds. \n\n", url, since.Seconds())
 
 	return r, nil
