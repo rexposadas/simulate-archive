@@ -2,40 +2,43 @@ package simulate
 
 import (
 	"sync"
-)	
+)
 
 // StatsObject is in charge of keep track of statistics
 type StatsObj struct {
+	Counter
+}
+type Counter struct {
 
 	// this variable keeps a map of strings and it's count.
 	Count map[string]int
 	sync.RWMutex
 }
-func New() *StatsObj {
-	return &StatsObj{
-		Count: make(map[string]int),
-	}
+
+func New() *Counter {
+	c := &Counter{}
+	c.Count = make(map[string]int)
+	return c
+
 }
+
 // Tick adds a one (+1) to the Map for a given key
-func (s *StatsObj) Add(t string) {
-	s.Lock()
-	defer s.Unlock()
-	s.SimpleMath(t, 1)
-
+func (c *Counter) Add(t string) {
+	c.SimpleMath(t, 1)
 }
 
-func (s *StatsObj) Sub(t string) {
-	s.Lock()
-	defer s.Unlock()
-	s.SimpleMath(t, -1)
+func (c *Counter) Sub(t string) {
+	c.SimpleMath(t, -1)
 }
 
 // simpleMath adds/substracts an arbitrary amount from a map key
-func (s *StatsObj) SimpleMath(t string, c int) {
+func (c *Counter) SimpleMath(t string, count int) {
+	c.Lock()
+	defer c.Unlock()
 
-	if val, ok := s.Count[t]; ok {
-		s.Count[t] = val + c
+	if val, ok := c.Count[t]; ok {
+		c.Count[t] = val + count
 	} else {
-		s.Count[t] = c
+		c.Count[t] = count
 	}
 }
