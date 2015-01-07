@@ -8,7 +8,7 @@ import (
 var (
 	Jobs  chan *Job
 	Port  int
-	Stats *Counter
+	Stats *StatsObj
 )
 
 // Run runs the simulate server

@@ -15,11 +15,10 @@ type Counter struct {
 	sync.RWMutex
 }
 
-func New() *Counter {
-	c := &Counter{}
-	c.Count = make(map[string]int)
-	return c
-
+func New() *StatsObj {
+	s := &StatsObj{}
+	s.Count = make(map[string]int)
+	return s
 }
 
 // Tick adds a one (+1) to the Map for a given key

@@ -2,7 +2,8 @@ package simulate
 
 import (
 	"github.com/stretchr/testify/assert"
-	
+
+	"fmt"
 	"testing"
 )
 
