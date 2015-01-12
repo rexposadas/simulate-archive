@@ -5,16 +5,19 @@ import (
 )
 
 var (
-	Jobs  chan *Job
-	Port  int
-	Stats *Stats
+	Jobs    chan *Job
+	Port    int
+	Metrics Stats
 )
 
 // Run runs the simulate server
 func Run() {
 	Jobs = make(chan *Job, 1000)
-	Stats = NewPrintStats() // default
-	go Stats.Run()
+
+	// todo: set via command line argument
+	Metrics = NewPrintStats() // default
+
+	go Metrics.Run()
 
 	fmt.Println("Simulator started \n\n")
 

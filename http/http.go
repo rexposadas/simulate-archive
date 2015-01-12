@@ -18,7 +18,7 @@ func MakeRequest(req *http.Request) (*SimResponse, error) {
 	resp, err := client.Do(req)
 	if err != nil {
 		// todo: add time to series
-		simulate.Stats.Error(err.Error())
+		simulate.Metrics.Error(err, "failed to make a request")
 		return nil, err
 	}
 	since := time.Since(start)
@@ -27,10 +27,10 @@ func MakeRequest(req *http.Request) (*SimResponse, error) {
 		Response: resp,
 	}
 
-	simulate.Stats.TrackResponse(req.URL.String(), since)
+	simulate.Metrics.TrackResponse(req.URL.String(), since)
 
 	if resp.StatusCode != 200 {
-		simulate.Stats.Error(resp.Status)
+		simulate.Metrics.Error(nil, resp.Status)
 	}
 
 	return r, nil
@@ -44,7 +44,7 @@ func Get(url string) (*SimResponse, error) {
 	start := time.Now()
 	resp, err := http.Get(url)
 	if err != nil {
-		simulate.Stats.Error(err.Error())
+		simulate.Metrics.Error(err)
 		return nil, err
 	}
 
@@ -55,10 +55,10 @@ func Get(url string) (*SimResponse, error) {
 	}
 
 	if resp.StatusCode != 200 {
-		simulate.Stats.Error(string(resp.StatusCode))
+		simulate.Metrics.Error(nil, string(resp.StatusCode))
 	}
 
-	simulate.Stats.TrackResponse(url, since)
+	simulate.Metrics.TrackResponse(url, since)
 	return r, nil
 }
 
@@ -68,7 +68,7 @@ func Post(url string, payload url.Values) (*SimResponse, error) {
 	start := time.Now()
 	resp, err := http.PostForm(url, payload)
 	if err != nil {
-		simulate.Stats.Error(err.Error())
+		simulate.Metrics.Error(err, "Failed to post form")
 
 		return nil, err
 	}
@@ -78,10 +78,9 @@ func Post(url string, payload url.Values) (*SimResponse, error) {
 		Duration: since,
 		Response: resp,
 	}
-	simulate.Stats.TrackResponse(url, since)
+	simulate.Metrics.TrackResponse(url, since)
 	if resp.StatusCode != 200 {
-		simulate.Stats.Error(string(resp.StatusCode))
+		simulate.Metrics.Error(nil, string(resp.StatusCode))
 	}
-
 	return r, nil
 }

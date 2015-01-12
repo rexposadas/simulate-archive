@@ -10,6 +10,7 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 
 	"github.com/rexposadas/simulate"
 	simhttp "github.com/rexposadas/simulate/http"
@@ -19,11 +20,15 @@ type MyActor struct{}
 
 // GetGoogle make a GET request to http://google.com
 func (m *MyActor) Run() error {
-	resp, err := simhttp.Get("http://google.com")
-	if err != nil {
-		return fmt.Errorf("got Error %+v ", err)
+	t := time.NewTicker(time.Second)
+	for {
+
+		_, err := simhttp.Get("http://google.com")
+		if err != nil {
+			return fmt.Errorf("got Error %+v ", err)
+		}
+		<-t.C
 	}
-	fmt.Printf("GetGoogle - response time %f seconds. \n\n", resp.Duration.Seconds())
 	return nil
 }
 
