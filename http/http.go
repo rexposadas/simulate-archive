@@ -1,10 +1,11 @@
 package http
 
 import (
-	"github.com/rexposadas/simulate"
 	"net/http"
 	"net/url"
 	"time"
+
+	"github.com/rexposadas/simulate"
 )
 
 // MakeRequest makes an HTTP request.

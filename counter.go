@@ -20,3 +20,9 @@ func (c *Counter) Add(k string, v int) {
 		c.M[k] = 1
 	}
 }
+
+func NewCounter() *Counter {
+	return &Counter{
+		M: make(map[string]int),
+	}
+}

@@ -7,13 +7,13 @@ import (
 var (
 	Jobs  chan *Job
 	Port  int
-	Stats *StatsObj
+	Stats *Stats
 )
 
 // Run runs the simulate server
 func Run() {
 	Jobs = make(chan *Job, 1000)
-	Stats = &StatsObj{}
+	Stats = NewPrintStats() // default
 	go Stats.Run()
 
 	fmt.Println("Simulator started \n\n")
