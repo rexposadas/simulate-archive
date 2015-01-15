@@ -2,6 +2,7 @@ package simulate
 
 import (
 	"fmt"
+	"net/http"
 	"time"
 )
 
@@ -46,8 +47,8 @@ func (p *PrintStats) Send() {
 }
 
 // TrackResponse tracks api response times.
-func (p *PrintStats) TrackResponse(url string, duration time.Duration) {
-	fmt.Printf("\nurl: %s duration: %v", url, duration)
+func (p *PrintStats) TrackResponse(req *http.Request, duration time.Duration) {
+	fmt.Printf("\n %s url: %s duration: %v", req.Method, req.URL.String(), duration)
 }
 
 // Add adds a one (+1) to the Map for a given key

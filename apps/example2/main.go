@@ -3,7 +3,7 @@ package main
 // This is a sample application which shows a simple use case of
 // simulate. This usecase hits the Google homepage once a second -
 // that's the default interval behavior.
-// The server faults to writing to stdout/stderr.
+// The server defaults to writing to stdout/stderr.
 
 import (
 	"os"

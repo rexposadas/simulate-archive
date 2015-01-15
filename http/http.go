@@ -27,7 +27,7 @@ func MakeRequest(req *http.Request) (*SimResponse, error) {
 		Response: resp,
 	}
 
-	simulate.Metrics.TrackResponse(req.URL.String(), since)
+	simulate.Metrics.TrackResponse(req, since)
 
 	if resp.StatusCode != 200 {
 		simulate.Metrics.Error(nil, resp.Status)
@@ -58,7 +58,6 @@ func Get(url string) (*SimResponse, error) {
 		simulate.Metrics.Error(nil, string(resp.StatusCode))
 	}
 
-	simulate.Metrics.TrackResponse(url, since)
 	return r, nil
 }
 
@@ -78,7 +77,6 @@ func Post(url string, payload url.Values) (*SimResponse, error) {
 		Duration: since,
 		Response: resp,
 	}
-	simulate.Metrics.TrackResponse(url, since)
 	if resp.StatusCode != 200 {
 		simulate.Metrics.Error(nil, string(resp.StatusCode))
 	}
