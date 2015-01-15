@@ -3,7 +3,13 @@ simulate
 
 ### Why simulate
 
-Unit and integration test run for a very limited amount of time.  They are not very good at detecting issues which may arise from long usage of your API.  Some of these issues are performance degradation and data corruption.
+It was born out of the need to limit expenses by not hiring a QA team, but still wanting to build a robust, well tested API. And certain questions we could not answer by simply hiring (if we wanted to hire). 
+
+*How do you test a thousand users using your API? How about a thousand mobile devices?*
+
+You'll obviously need to simulate this since it would be non-sense to hire a thousand testers. 
+
+The next question was, how do we know how well our application behaved over a long period of time *before* releasing it to the public?  Again, this has to be done programatically.  Unit and integration test run for a very limited amount of time.  They are not very good at detecting issues which may arise from long usage of your API.  Some of these issues are performance degradation and data corruption.
 
 Simulate can be as intrusive as you want (don't worry, that's a good thing.  I can explain).  It can act as an outside application which treats your API as a blackbox or can be imported in your Go application and give it access to features you want to test. Note that having simulate run separately from your application allows your application to be written in any language since the interaction will strictly be via REST.
 
@@ -13,7 +19,7 @@ Simulate can be as intrusive as you want (don't worry, that's a good thing.  I c
 1. Hit endpoints much like any API test applications
 1. Validate that actions taken on your API is represented correctly in your database.
 1. Detect issues in your application which can surface only after long periods of use, such as data corruption and performance degradation.
-2. You can simulate release candidates before moving it further along the deployment chain.
+2. Simulate release candidates before moving it further along the deployment chain.
 
 ### Getting started
 
