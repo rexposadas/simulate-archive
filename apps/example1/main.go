@@ -23,7 +23,7 @@ func (m *MyActor) Run() error {
 	t := time.NewTicker(time.Second)
 	for {
 
-		err := simhttp.Get("http://google.com")
+		_, err := simhttp.Get("http://google.com")
 		if err != nil {
 			return fmt.Errorf("got Error %+v ", err)
 		}

@@ -41,26 +41,26 @@ func MakeRequest(req *http.Request) (*SimResponse, error) {
 	return r, nil
 }
 
-func Get(url string) error {
+func Get(url string) (*SimResponse, error) {
 
 	req, _ := http.NewRequest("GET", url, nil)
 
-	_, err := MakeRequest(req)
+	resp, err := MakeRequest(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	return resp, nil
 }
 
-func Post(url string, payload url.Values) error {
+func Post(url string, payload url.Values) (*SimResponse, error) {
 
 	req, _ := http.NewRequest("PostForm", url, bytes.NewBufferString(payload.Encode()))
 
-	_, err := MakeRequest(req)
+	resp, err := MakeRequest(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	return resp, nil
 }
