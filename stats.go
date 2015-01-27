@@ -1,11 +1,14 @@
 package simulate
 
 import (
+	"net/http"
 	"time"
 )
 
 type Stats interface {
-	TrackResponse(url string, duration time.Duration)
+	// TrackResponse tracks how long a request took
+	TrackResponse(req *http.Request, duration time.Duration)
+
 	Error(err error, msg ...string)
 	Send()
 	Run()
