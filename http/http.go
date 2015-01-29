@@ -1,6 +1,7 @@
 package http
 
 import (
+	"bytes"
 	"net/http"
 	"net/url"
 	"time"
@@ -16,11 +17,15 @@ func MakeRequest(req *http.Request) (*SimResponse, error) {
 	start := time.Now()
 
 	resp, err := client.Do(req)
+
 	if err != nil {
 		// todo: add time to series
 		simulate.Metrics.Error(err, "failed to make a request")
 		return nil, err
 	}
+
+	defer resp.Body.Close()
+
 	since := time.Since(start)
 	r := &SimResponse{
 		Duration: since,
@@ -36,49 +41,25 @@ func MakeRequest(req *http.Request) (*SimResponse, error) {
 	return r, nil
 }
 
-// Get, runs a simple GET request on the specified URL.
-// The caller is in charge of closing the response body. ( #todo: is this proper? )
-
 func Get(url string) (*SimResponse, error) {
 
-	start := time.Now()
-	resp, err := http.Get(url)
+	req, _ := http.NewRequest("GET", url, nil)
+
+	r, err := MakeRequest(req)
 	if err != nil {
-		simulate.Metrics.Error(err)
 		return nil, err
 	}
-
-	since := time.Since(start)
-	r := &SimResponse{
-		Duration: since,
-		Response: resp,
-	}
-
-	if resp.StatusCode != 200 {
-		simulate.Metrics.Error(nil, string(resp.StatusCode))
-	}
-
 	return r, nil
 }
 
-// The caller is in charge of closing the response body. ( #todo: is this proper? )
 func Post(url string, payload url.Values) (*SimResponse, error) {
 
-	start := time.Now()
-	resp, err := http.PostForm(url, payload)
-	if err != nil {
-		simulate.Metrics.Error(err, "Failed to post form")
+	req, _ := http.NewRequest("PostForm", url, bytes.NewBufferString(payload.Encode()))
 
+	r, err := MakeRequest(req)
+	if err != nil {
 		return nil, err
 	}
 
-	since := time.Since(start)
-	r := &SimResponse{
-		Duration: since,
-		Response: resp,
-	}
-	if resp.StatusCode != 200 {
-		simulate.Metrics.Error(nil, string(resp.StatusCode))
-	}
 	return r, nil
 }
