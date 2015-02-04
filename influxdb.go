@@ -9,7 +9,8 @@ import (
 )
 
 const (
-	INFLUXDB = 1
+	_ = iota
+	INFLUXDB
 )
 
 // Stats goes to influxDB
