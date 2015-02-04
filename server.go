@@ -2,7 +2,13 @@ package simulate
 
 import (
 	"fmt"
+	"net/http"
+	"time"
 )
+
+type Config struct {
+	Type int
+}
 
 var (
 	Jobs    chan *Job
@@ -10,12 +16,32 @@ var (
 	Metrics Stats
 )
 
+func NewConfig() Config {
+	return Config{}
+}
+
+func Add(k string) {
+	Metrics.Tally(k, 1)
+}
+
+func Error(err error, msg string) {
+	Metrics.Error(err, msg)
+}
+
+func TrackResponse(req *http.Request, d time.Duration) {
+	Metrics.TrackResponse(req, d)
+}
+
 // Run runs the simulate server
-func Run() {
+func Run(c Config) {
 	Jobs = make(chan *Job, 1000)
 
 	// todo: set via command line argument
-	Metrics = NewPrintStats() // default
+	if c.Type == INFLUXDB {
+		Metrics = NewInfluxDB()
+	} else {
+		Metrics = NewPrintStats() // default
+	}
 
 	go Metrics.Run()
 

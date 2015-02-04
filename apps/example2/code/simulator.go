@@ -46,7 +46,8 @@ func RunSimulator() {
 
 	// The simulater is a service which makes API calls
 	// no need to run simulate's REST endpoint for this example
-	simulate.Run()
+	c := simulate.NewConfig()
+	simulate.Run(c)
 
 	// Create job and send to scheduler
 	j := simulate.NewJob()

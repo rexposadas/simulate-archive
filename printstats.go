@@ -26,12 +26,9 @@ func (p *PrintStats) Run() {
 	}
 }
 
-func (p *PrintStats) Error(err error, msg ...string) {
+func (p *PrintStats) Error(err error, msg string) {
 	if err != nil {
-		fmt.Printf("%+v", err)
-	}
-	for m := range msg {
-		fmt.Printf("\n%s", m)
+		fmt.Printf("%+v - %s", err, msg)
 	}
 }
 
@@ -42,13 +39,17 @@ func (p *PrintStats) Send() {
 	defer p.Count.Unlock()
 
 	for k, v := range p.Count.M {
-		fmt.Printf("key: `%s` response: `%v`", k, v)
+		fmt.Printf("\nkey: %s response: %v", k, v)
 	}
 }
 
 // TrackResponse tracks api response times.
 func (p *PrintStats) TrackResponse(req *http.Request, duration time.Duration) {
-	fmt.Printf("\n %s url: %s duration: %v", req.Method, req.URL.String(), duration)
+	fmt.Printf("\n %s url: %s took: %v", req.Method, req.URL.String(), duration)
+}
+
+func (p *PrintStats) Tally(key string, count int) {
+	go p.Count.Add(key, count)
 }
 
 // Add adds a one (+1) to the Map for a given key

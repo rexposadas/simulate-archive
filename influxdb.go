@@ -8,11 +8,19 @@ import (
 	"github.com/influxdb/influxdb/client"
 )
 
+const (
+	INFLUXDB = 1
+)
+
 // Stats goes to influxDB
 type InfluxDBStats struct {
 	Database string
 	Count    *Counter
 	Client   *client.Client
+}
+
+func (i *InfluxDBStats) Error(err error, msg string) {
+	// todo: implement
 }
 
 func (i *InfluxDBStats) mustDB() {
@@ -43,6 +51,12 @@ func (i *InfluxDBStats) mustDB() {
 
 	if err != nil {
 		panic(err)
+	}
+}
+
+func NewInfluxDB() *InfluxDBStats {
+	return &InfluxDBStats{
+		Database: "leaf",
 	}
 }
 
