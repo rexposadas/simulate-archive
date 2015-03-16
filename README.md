@@ -1,6 +1,8 @@
 simulate
 ========
 
+This is a library in it's *alpha* stage. It was a concept project I built since I work with startups which usually has no QA team. 
+
 ### Why simulate
 
 It was born out of the need to limit expenses by not hiring a QA team, but still wanting to build a robust and well tested API. I also created this library to answer questions we, my current firm, could not answer by simply hiring (if we wanted to hire). 
