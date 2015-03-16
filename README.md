@@ -3,7 +3,7 @@ simulate
 
 ### Why simulate
 
-It was born out of the need to limit expenses by not hiring a QA team, but still wanting to build a robust, well tested API. And certain questions we could not answer by simply hiring (if we wanted to hire). 
+It was born out of the need to limit expenses by not hiring a QA team, but still wanting to build a robust and well tested API. I also created this library to answer questions we, my current firm, could not answer by simply hiring (if we wanted to hire). 
 
 *How do you test a thousand users using your API? How about a thousand mobile devices?*
 
