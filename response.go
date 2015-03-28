@@ -1,13 +1,14 @@
-package http
+package simulate
 
 import (
-	"net/http"
 	"time"
+
+	"github.com/franela/goreq"
 )
 
 // Response contains information about the response we received
 // from the API
-type SimResponse struct {
-	*http.Response
+type Response struct {
+	*goreq.Response
 	Duration time.Duration // how long did we wait for the response
 }

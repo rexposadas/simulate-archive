@@ -12,8 +12,8 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/franela/goreq"
 	"github.com/rexposadas/simulate"
-	simhttp "github.com/rexposadas/simulate/http"
 )
 
 type MyActor struct{}
@@ -21,11 +21,16 @@ type MyActor struct{}
 // GetGoogle make a GET request to http://google.com
 func (m *MyActor) Run() error {
 	t := time.NewTicker(time.Second)
+
+	req := goreq.Request{
+		Uri: "http://google.com",
+	}
 	for {
-		_, err := simhttp.Get("http://google.com")
+		s, err := simulate.MakeRequest(req)
 		if err != nil {
 			return fmt.Errorf("got Error %+v ", err)
 		}
+		s.Response.Body.Close()
 		<-t.C
 	}
 	return nil

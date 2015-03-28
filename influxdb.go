@@ -2,9 +2,9 @@ package simulate
 
 import (
 	"fmt"
-	"net/http"
 	"time"
 
+	"github.com/franela/goreq"
 	"github.com/influxdb/influxdb/client"
 )
 
@@ -68,12 +68,12 @@ func (i *InfluxDBStats) Run() {
 }
 
 // TrackResponse sends response times to influxDB
-func (i *InfluxDBStats) TrackResponse(req *http.Request, duration time.Duration) {
+func (i *InfluxDBStats) TrackResponse(req *goreq.Request, duration time.Duration) {
 	u := &client.Series{
 		Name:    "api",
 		Columns: []string{"method", "url", "response_time"},
 		Points: [][]interface{}{
-			{req.Method, req.URL.String(), duration.Seconds() * 1000},
+			{req.Method, req.Uri, duration.Seconds() * 1000},
 		},
 	}
 

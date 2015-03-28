@@ -10,16 +10,16 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/rexposadas/simulate/apps/example2/code"
+	"github.com/rexposadas/simulate/examples/fakeapi"
 )
 
 func main() {
 
 	// start the API we will simulate against
-	go code.StartAPI(7676)
+	go fakeapi.StartAPI(7676)
 
 	// run simulations against the our fake API
-	go code.RunSimulator()
+	go fakeapi.RunSimulator()
 
 	sigc := make(chan os.Signal, 1)
 	signal.Notify(sigc, syscall.SIGQUIT)

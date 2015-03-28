@@ -1,4 +1,4 @@
-package code
+package fakeapi
 
 // This is a sample application which shows a simple use case of
 // simulate. This usecase hits the Google homepage once a second -
@@ -6,11 +6,10 @@ package code
 // The simulate faults to writing to stdout/stderr.
 
 import (
-	"net/url"
 	"time"
 
+	"github.com/franela/goreq"
 	"github.com/rexposadas/simulate"
-	simhttp "github.com/rexposadas/simulate/http"
 )
 
 type MyActor struct{}
@@ -24,8 +23,16 @@ func (m *MyActor) Run() error {
 func (m *MyActor) Get() error {
 
 	t := time.NewTicker(time.Second * 2)
+	req := goreq.Request{
+		Uri: "http://localhost:7676/jobs",
+	}
 	for {
-		simhttp.Get("http://localhost:7676/jobs")
+		s, err := simulate.MakeRequest(req)
+		if err != nil {
+			return err
+		}
+		defer s.Response.Body.Close()
+
 		<-t.C
 	}
 
@@ -34,9 +41,18 @@ func (m *MyActor) Get() error {
 
 func (m *MyActor) Post() error {
 
+	req := goreq.Request{
+		Method: "POST",
+		Uri:    "http://localhost:7676/jobs",
+	}
+
 	t := time.NewTicker(time.Second)
 	for {
-		simhttp.Post("http://localhost:7676/jobs", url.Values{})
+		s, err := simulate.MakeRequest(req)
+		if err != nil {
+			return err
+		}
+		defer s.Response.Body.Close()
 		<-t.C
 	}
 	return nil

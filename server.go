@@ -2,8 +2,9 @@ package simulate
 
 import (
 	"fmt"
-	"net/http"
 	"time"
+
+	"github.com/franela/goreq"
 )
 
 type Config struct {
@@ -28,7 +29,7 @@ func Error(err error, msg string) {
 	Metrics.Error(err, msg)
 }
 
-func TrackResponse(req *http.Request, d time.Duration) {
+func TrackResponse(req *goreq.Request, d time.Duration) {
 	Metrics.TrackResponse(req, d)
 }
 

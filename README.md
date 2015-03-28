@@ -1,9 +1,9 @@
 simulate
 ========
 
-This is a library in it's *alpha* stage. It was a concept project I built since I work with startups which usually has no QA team. 
+This is a library in its *alpha* stage. 
 
-### Why simulate
+### The motivation
 
 It was born out of the need to limit expenses by not hiring a QA team, but still wanting to build a robust and well tested API. I also created this library to answer questions we, my current firm, could not answer by simply hiring (if we wanted to hire). 
 
@@ -27,7 +27,7 @@ Simulate can be as intrusive as you want (don't worry, that's a good thing.  I c
 
 The quickest way to get started is to run the sample application.
 
-Get the package.
+Installation:
 
 	go get github.com/rexposadas/simulate
 
@@ -41,7 +41,7 @@ To get started with your own simulation, refer to the code in `apps/sample/examp
 
 ### Output
 
-There are two ways simulate outputs results. The default is via stdout. The other, is sending it's results to InfluxDB. 
+There are two ways simulate outputs results. The default is via stdout. The other is sending it's results to InfluxDB. 
 
 ### Roadmap
 

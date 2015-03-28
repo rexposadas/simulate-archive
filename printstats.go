@@ -2,8 +2,9 @@ package simulate
 
 import (
 	"fmt"
-	"net/http"
 	"time"
+
+	"github.com/franela/goreq"
 )
 
 type PrintStats struct {
@@ -44,8 +45,8 @@ func (p *PrintStats) Send() {
 }
 
 // TrackResponse tracks api response times.
-func (p *PrintStats) TrackResponse(req *http.Request, duration time.Duration) {
-	fmt.Printf("\n %s url: %s took: %v", req.Method, req.URL.String(), duration)
+func (p *PrintStats) TrackResponse(req *goreq.Request, duration time.Duration) {
+	fmt.Printf("\n %s url: %s took: %v", req.Method, req.Uri, duration)
 }
 
 func (p *PrintStats) Tally(key string, count int) {

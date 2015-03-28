@@ -1,13 +1,14 @@
 package simulate
 
 import (
-	"net/http"
 	"time"
+
+	"github.com/franela/goreq"
 )
 
 type Stats interface {
 	// TrackResponse tracks how long a request took
-	TrackResponse(req *http.Request, duration time.Duration)
+	TrackResponse(req *goreq.Request, duration time.Duration)
 
 	Tally(key string, count int)
 	Error(err error, msg string)
