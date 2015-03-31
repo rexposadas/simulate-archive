@@ -43,6 +43,8 @@ To get started with your own simulation, refer to the code in `apps/sample/examp
 
 There are two ways simulate outputs results. The default is via stdout. The other is sending it's results to InfluxDB. 
 
+### Use InfluxDB and Graphana
+
 ### Roadmap
 
 * Metrics integration 

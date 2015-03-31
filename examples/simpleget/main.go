@@ -16,9 +16,10 @@ import (
 	"github.com/rexposadas/simulate"
 )
 
+// MyActor is a behaviour that can be ran in this example
 type MyActor struct{}
 
-// GetGoogle make a GET request to http://google.com
+// Run makes GET requests to http://google.com
 func (m *MyActor) Run() error {
 	t := time.NewTicker(time.Second)
 

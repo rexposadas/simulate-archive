@@ -12,14 +12,17 @@ import (
 	"github.com/rexposadas/simulate"
 )
 
+// MyActor defines a behaviour in our example
 type MyActor struct{}
 
+// Run satisfies a behaviour which the simulator can run
 func (m *MyActor) Run() error {
 	m.Get()
 	m.Post()
 	return nil
 }
 
+// Get handles GET http requests
 func (m *MyActor) Get() error {
 
 	t := time.NewTicker(time.Second * 2)
@@ -39,6 +42,7 @@ func (m *MyActor) Get() error {
 	return nil
 }
 
+// Post handles POST http requests
 func (m *MyActor) Post() error {
 
 	req := goreq.Request{
@@ -58,6 +62,7 @@ func (m *MyActor) Post() error {
 	return nil
 }
 
+// RunSimulator runs the example which creates jobs and sends them to the job queue
 func RunSimulator() {
 
 	// The simulater is a service which makes API calls

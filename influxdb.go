@@ -10,16 +10,19 @@ import (
 
 const (
 	_ = iota
+
+	// INFLUXDB indicates the user of influxDB
 	INFLUXDB
 )
 
-// Stats goes to influxDB
+// InfluxDBStats goes to influxDB
 type InfluxDBStats struct {
 	Database string
 	Count    *Counter
 	Client   *client.Client
 }
 
+// Error sends errors to influxDB
 func (i *InfluxDBStats) Error(err error, msg string) {
 	// todo: implement
 }
@@ -55,12 +58,14 @@ func (i *InfluxDBStats) mustDB() {
 	}
 }
 
+// NewInfluxDB returns an intialized key
 func NewInfluxDB() *InfluxDBStats {
 	return &InfluxDBStats{
 		Database: "leaf",
 	}
 }
 
+// Run runs this stats
 func (i *InfluxDBStats) Run() {
 	i.Count = NewCounter()
 	i.mustDB()
@@ -113,6 +118,7 @@ func (i *InfluxDBStats) Send() {
 	}
 }
 
+// Tally adds to the a counter
 func (i *InfluxDBStats) Tally(t string, c int) {
 	i.Count.Add(t, c)
 }
@@ -122,7 +128,7 @@ func (i *InfluxDBStats) Add(t string) {
 	go i.Tally(t, 1)
 }
 
-// Add substracts one (-1) to the Map for a given key
+// Sub substracts one (-1) to the Map for a given key
 func (i *InfluxDBStats) Sub(t string) {
 	go i.Tally(t, -1)
 }

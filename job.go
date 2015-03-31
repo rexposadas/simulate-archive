@@ -6,6 +6,8 @@ import (
 
 type call func() error
 
+// ActorImp is an interface which indicates an actor that
+// the simulator runs.
 type ActorImp interface {
 	Run() error
 }

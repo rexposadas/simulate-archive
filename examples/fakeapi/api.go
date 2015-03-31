@@ -8,6 +8,7 @@ import (
 	"strconv"
 )
 
+// StartAPI starts a fake api
 func StartAPI(port int) {
 	r := mux.NewRouter()
 	r.HandleFunc("/jobs", A)
@@ -21,6 +22,7 @@ func StartAPI(port int) {
 	}
 }
 
+// A is a simple handler which prints request method
 func A(w http.ResponseWriter, r *http.Request) {
 
 	switch r.Method {

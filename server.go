@@ -7,28 +7,38 @@ import (
 	"github.com/franela/goreq"
 )
 
+// Config is the configuration struct
 type Config struct {
 	Type int
 }
 
 var (
-	Jobs    chan *Job
-	Port    int
+	// Jobs is the job queue
+	Jobs chan *Job
+
+	// Port to run the server
+	Port int
+
+	// Metrics to keep various stats
 	Metrics Stats
 )
 
+// NewConfig returns an initialized config
 func NewConfig() Config {
 	return Config{}
 }
 
+// Add adds (+1) to a key
 func Add(k string) {
 	Metrics.Tally(k, 1)
 }
 
+// Error sends an error to the metrics struct
 func Error(err error, msg string) {
 	Metrics.Error(err, msg)
 }
 
+// TrackResponse sends track messages to the metrics struct
 func TrackResponse(req *goreq.Request, d time.Duration) {
 	Metrics.TrackResponse(req, d)
 }
