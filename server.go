@@ -67,6 +67,6 @@ func worker() {
 
 	for {
 		j := <-Jobs
-		go j.Actor.Run()
+		go j.Actor.Act()
 	}
 }

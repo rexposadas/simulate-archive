@@ -20,7 +20,7 @@ import (
 type MyActor struct{}
 
 // Run makes GET requests to http://google.com
-func (m *MyActor) Run() error {
+func (m *MyActor) Act() error {
 	t := time.NewTicker(time.Second)
 
 	req := goreq.Request{

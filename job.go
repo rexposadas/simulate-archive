@@ -9,7 +9,7 @@ type call func() error
 // ActorImp is an interface which indicates an actor that
 // the simulator runs.
 type ActorImp interface {
-	Run() error
+	Act() error
 }
 
 // Job is a job which simulate runs.  Jobs are sent to the Jobs channel
