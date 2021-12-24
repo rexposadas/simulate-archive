@@ -3,6 +3,7 @@ simulate
 
 This is a library in its *alpha* stage. 
 
+
 ### The motivation
 
 It was born out of the need to limit expenses by not hiring a QA team, but still wanting to build a robust and well tested API. I also created this library to answer questions we, my current firm, could not answer by simply hiring (if we wanted to hire). 
@@ -49,3 +50,4 @@ There are two ways simulate outputs results. The default is via stdout. The othe
 
 * Metrics integration 
 * More examples
+* Determine list of features
